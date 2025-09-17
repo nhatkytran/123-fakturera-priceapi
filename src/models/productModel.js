@@ -15,7 +15,7 @@ export const ProductModel = sequelize =>
         allowNull: false,
         field: 'article_no',
       },
-      productService: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         field: 'name',
