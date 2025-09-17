@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
+import { loggerConfig } from './config';
 
-const fastify = Fastify({ logger: process.env.NODE_ENV === "development" });
+const fastify = Fastify({ logger: loggerConfig() });
 
 fastify.get('/', async (request, reply) => {
   return { hello: 'world' }
