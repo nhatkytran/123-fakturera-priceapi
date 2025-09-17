@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import { loggerConfig } from './config';
+import { loggerConfig } from './config/logger.js';
 
 const fastify = Fastify({ logger: loggerConfig() });
 

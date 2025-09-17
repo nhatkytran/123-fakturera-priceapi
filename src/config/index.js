@@ -1,1 +1,0 @@
-export { loggerConfig } from "./logger";
