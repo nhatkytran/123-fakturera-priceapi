@@ -2,9 +2,11 @@ import fastifyEnv from '@fastify/env';
 
 const schema = {
   type: 'object',
-  required: ['PORT'],
+  required: ['PORT', 'CORS_ORIGIN_DEV', 'CORS_ORIGIN_PROD'],
   properties: {
     PORT: { type: 'number', default: 3000 },
+    CORS_ORIGIN_DEV: { type: 'string' },
+    CORS_ORIGIN_PROD: { type: 'string' },
   },
 };
 
