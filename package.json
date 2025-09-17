@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon server.js | npx pino-pretty",
-    "prod": "NODE_ENV=production node server.js"
+    "prod": "NODE_ENV=production node server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,9 @@
     "fastify": "^5.6.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "globals": "^16.4.0",
     "nodemon": "^3.1.10",
     "pino-pretty": "^13.1.1"
   }
