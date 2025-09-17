@@ -3,21 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "src/**/*.{css,scss,json,md}": [
-      "prettier --write"
-    ]
-  },
   "scripts": {
     "dev": "NODE_ENV=development nodemon server.js | npx pino-pretty",
     "prod": "NODE_ENV=production node server.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "prepare": "husky"
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
