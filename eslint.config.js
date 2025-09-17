@@ -6,7 +6,6 @@ import jsdoc from 'eslint-plugin-jsdoc';
 export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs}'],
-    '*.{js,jsx}': ['eslint --fix', 'prettier --write'],
     plugins: { js, jsdoc },
     extends: ['js/recommended'],
     languageOptions: { globals: globals.node },
