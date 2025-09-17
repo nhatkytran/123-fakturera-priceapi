@@ -18,6 +18,11 @@ fastify.get('/', async (request, reply) => {
 
 fastify.register(productRoutes, { prefix: '/api/v1/products' });
 
+fastify.setErrorHandler((error, request, reply) => {
+  fastify.log.error(error);
+  reply.status(error.statusCode || 500).send({ status: 'error', message: error.message });
+});
+
 (async () => {
   try {
     fastify.sequelize.sync();
