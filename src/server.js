@@ -14,12 +14,16 @@ await registerCors(fastify);
 await registerDb(fastify);
 
 fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
+  reply.send({ message: 'Hello World' });
 });
 
 fastify.get('/products', async (request, reply) => {
-  const products = await ProductModel(fastify.sequelize).findAll();
-  return products;
+  try {
+    const products = await ProductModel(fastify.sequelize).findAll();
+    reply.send({ status: 'success', results: products.length, data: products });
+  } catch (error) {
+    reply.code(500).send({ status: 'error', message: error.message });
+  }
 });
 
 (async () => {
