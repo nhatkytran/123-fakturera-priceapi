@@ -4,16 +4,14 @@ import { loggerConfig } from './config';
 const fastify = Fastify({ logger: loggerConfig() });
 
 fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
+  return { hello: 'world' };
 });
-
-console.log(123);
 
 (async () => {
   try {
-    await fastify.listen({ port: 3000 })
+    await fastify.listen({ port: 3000 });
   } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
+    fastify.log.error(err);
+    process.exit(1);
   }
 })();

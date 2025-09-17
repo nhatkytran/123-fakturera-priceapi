@@ -2,13 +2,13 @@
 export const loggerConfig = () => {
   const pinoPrettyConfig = {
     transport: {
-      target: "pino-pretty",
+      target: 'pino-pretty',
       options: {
         colorize: true,
-        translateTime: "SYS:standard",
-        ignore: "pid,hostname",
+        translateTime: 'SYS:standard',
+        ignore: 'pid,hostname',
       },
     },
   };
-  return process.env.NODE_ENV === "development" ? pinoPrettyConfig : true;
+  return process.env.NODE_ENV === 'development' ? pinoPrettyConfig : true;
 };
