@@ -4,8 +4,7 @@ import { loggerConfig } from './config/logger.js';
 import { registerEnv } from './config/env.js';
 import { registerCors } from './config/cors.js';
 import { registerDb } from './config/db.js';
-
-import { ProductModel } from './models/productModel.js';
+import { productRoutes } from './routes/productRoutes.js';
 
 const fastify = Fastify({ logger: loggerConfig() });
 
@@ -17,14 +16,7 @@ fastify.get('/', async (request, reply) => {
   reply.send({ message: 'Hello World' });
 });
 
-fastify.get('/products', async (request, reply) => {
-  try {
-    const products = await ProductModel(fastify.sequelize).findAll();
-    reply.send({ status: 'success', results: products.length, data: products });
-  } catch (error) {
-    reply.code(500).send({ status: 'error', message: error.message });
-  }
-});
+fastify.register(productRoutes, { prefix: '/api/v1/products' });
 
 (async () => {
   try {
