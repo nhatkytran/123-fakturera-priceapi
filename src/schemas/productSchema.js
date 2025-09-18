@@ -1,3 +1,6 @@
+/** ID params schema. */
+export const idParamsSchema = { type: 'object', properties: { id: { type: 'integer' } }, required: ['id'] };
+
 /** Product schema. */
 export const productSchema = {
   id: { type: 'integer', example: 1 },
@@ -27,5 +30,40 @@ export const getAllProductsSchema = {
         },
       },
     },
+  },
+};
+
+/** Product body schema. */
+export const productBodySchema = {
+  type: 'object',
+  properties: {
+    articleNo: { type: 'integer' },
+    name: { type: 'string' },
+    inPrice: { type: 'integer' },
+    price: { type: 'integer' },
+    unit: { type: 'string' },
+    inStock: { type: 'integer' },
+    description: { type: 'string' },
+  },
+  required: ['articleNo', 'name', 'inPrice', 'price', 'unit', 'inStock', 'description'],
+  additionalProperties: false,
+};
+
+/** Update product by ID schema. */
+export const updateProductByIdSchema = {
+  schema: {
+    description: 'Update product by ID.',
+    tags: ['Products'],
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'success' },
+          data: { type: 'object', properties: productSchema },
+        },
+      },
+    },
+    body: productBodySchema,
+    params: idParamsSchema,
   },
 };
