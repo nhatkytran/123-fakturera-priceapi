@@ -1,22 +1,8 @@
-const healthCheckSchema = {
-  schema: {
-    description: 'Health check endpoint to test if server is running.',
-    tags: ['Health check'],
-    response: {
-      200: {
-        type: 'object',
-        properties: {
-          message: { type: 'string', example: 'Hello World' },
-        },
-      },
-    },
-  },
-};
+import { healthCheck } from '../controllers/utilityController.js';
+import { healthCheckSchema } from '../schemas/utilitySchema.js';
 
 /** Utility routes. */
 export const utilityRoutes = async fastify => {
   /** Health check. */
-  fastify.get('/', healthCheckSchema, async (request, reply) => {
-    reply.send({ message: 'Hello World' });
-  });
+  fastify.get('/', healthCheckSchema, healthCheck);
 };
