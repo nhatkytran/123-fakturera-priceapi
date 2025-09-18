@@ -1,0 +1,14 @@
+/** App error. */
+export class AppError extends Error {
+  /**
+   * Constructor.
+   * @param {string} message
+   * @param {number} statusCode
+   */
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
