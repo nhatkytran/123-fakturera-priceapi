@@ -14,6 +14,7 @@ import { registerDb } from './config/db.js';
 import { registerSwagger } from './plugins/swagger.js';
 import { utilityRoutes } from './routes/utilityRoutes.js';
 import { productRoutes } from './routes/productRoutes.js';
+import { globalErrorHandler } from './controllers/errorController.js';
 
 /** Initialize Fastify. */
 const fastify = Fastify({ logger: loggerConfig() });
@@ -29,10 +30,7 @@ fastify.register(utilityRoutes);
 fastify.register(productRoutes, { prefix: '/api/v1/products' });
 
 /** Error handler. */
-fastify.setErrorHandler((error, request, reply) => {
-  fastify.log.error(error);
-  reply.status(error.statusCode || 500).send({ status: 'error', message: error.message });
-});
+fastify.setErrorHandler(globalErrorHandler(fastify));
 
 /** Start server. */
 (async () => {
