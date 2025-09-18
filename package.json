@@ -14,6 +14,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/server.js | npx pino-pretty",
+    "build": "echo 'No build step required'",
     "prod": "NODE_ENV=production node src/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
