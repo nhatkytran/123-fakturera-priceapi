@@ -12,8 +12,7 @@ export const registerSwagger = async function (fastify) {
       },
       servers: [
         { url: 'http://localhost:3000', description: 'Dev server' },
-        // TODO: Add production server.
-        // { url: 'https://your-prod-domain.com', description: 'Prod server' },
+        { url: 'https://123-fakturera-priceapi-ky-tran.up.railway.app/', description: 'Prod server' },
       ],
     },
   });
