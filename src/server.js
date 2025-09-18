@@ -11,17 +11,39 @@ import { loggerConfig } from './config/logger.js';
 import { registerEnv } from './config/env.js';
 import { registerCors } from './config/cors.js';
 import { registerDb } from './config/db.js';
+import { registerSwagger } from './plugins/swagger.js';
 import { productRoutes } from './routes/productRoutes.js';
 
+/** Initialize Fastify. */
 const fastify = Fastify({ logger: loggerConfig() });
 
+/** Register plugins. */
 await registerEnv(fastify);
 await registerCors(fastify);
 await registerDb(fastify);
+await registerSwagger(fastify);
 
-fastify.get('/', async (request, reply) => {
-  reply.send({ message: 'Hello World' });
-});
+/** Register routes. */
+fastify.get(
+  '/',
+  {
+    schema: {
+      description: 'Health check endpoint to test if server is running',
+      tags: ['Health check'],
+      response: {
+        200: {
+          type: 'object',
+          properties: {
+            message: { type: 'string', example: 'Hello World' },
+          },
+        },
+      },
+    },
+  },
+  async (request, reply) => {
+    reply.send({ message: 'Hello World' });
+  },
+);
 
 fastify.register(productRoutes, { prefix: '/api/v1/products' });
 
@@ -30,6 +52,7 @@ fastify.setErrorHandler((error, request, reply) => {
   reply.status(error.statusCode || 500).send({ status: 'error', message: error.message });
 });
 
+/** Start server. */
 (async () => {
   try {
     fastify.sequelize.sync();
