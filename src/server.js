@@ -1,5 +1,12 @@
 import Fastify from 'fastify';
 
+import {
+  globalErrorHandler,
+  uncaughtExceptionHandler,
+  unhandledRejectionHandler,
+  sigtermHandler,
+} from './controllers/exceptionController.js';
+
 /** Handle uncaught exceptions. */
 process.on('uncaughtException', uncaughtExceptionHandler);
 
@@ -10,12 +17,6 @@ import { registerDb } from './config/db.js';
 import { registerSwagger } from './plugins/swagger.js';
 import { utilityRoutes } from './routes/utilityRoutes.js';
 import { productRoutes } from './routes/productRoutes.js';
-import {
-  globalErrorHandler,
-  uncaughtExceptionHandler,
-  unhandledRejectionHandler,
-  sigtermHandler,
-} from './controllers/exceptionController.js';
 
 /** Initialize Fastify. */
 const fastify = Fastify({ logger: loggerConfig() });
