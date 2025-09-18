@@ -1,11 +1,7 @@
 import Fastify from 'fastify';
 
 /** Handle uncaught exceptions. */
-process.on('uncaughtException', err => {
-  console.error('UNCAUGHT EXCEPTION! Shutting down...');
-  console.error(err.name, err.message);
-  process.exit(1);
-});
+process.on('uncaughtException', uncaughtExceptionHandler);
 
 import { loggerConfig } from './config/logger.js';
 import { registerEnv } from './config/env.js';
@@ -14,7 +10,12 @@ import { registerDb } from './config/db.js';
 import { registerSwagger } from './plugins/swagger.js';
 import { utilityRoutes } from './routes/utilityRoutes.js';
 import { productRoutes } from './routes/productRoutes.js';
-import { globalErrorHandler } from './controllers/errorController.js';
+import {
+  globalErrorHandler,
+  uncaughtExceptionHandler,
+  unhandledRejectionHandler,
+  sigtermHandler,
+} from './controllers/exceptionController.js';
 
 /** Initialize Fastify. */
 const fastify = Fastify({ logger: loggerConfig() });
@@ -44,28 +45,7 @@ fastify.setErrorHandler(globalErrorHandler(fastify));
 })();
 
 /** Handle unhandled rejections. */
-process.on('unhandledRejection', err => {
-  console.error('UNHANDLED REJECTION! Shutting down...');
-  console.error(err.name, err.message);
-  if (fastify.server) {
-    fastify.server.close(() => {
-      if (fastify.sequelize) {
-        fastify.sequelize.close();
-      }
-      process.exit(1);
-    });
-  }
-});
+process.on('unhandledRejection', unhandledRejectionHandler(fastify));
 
 /** Handle SIGTERM. */
-process.on('SIGTERM', () => {
-  console.error('SIGTERM RECEIVED. Shutting down gracefully.');
-  if (fastify.server) {
-    fastify.server.close(() => {
-      console.error('Process terminated!');
-      if (fastify.sequelize) {
-        fastify.sequelize.close();
-      }
-    });
-  }
-});
+process.on('SIGTERM', sigtermHandler(fastify));
