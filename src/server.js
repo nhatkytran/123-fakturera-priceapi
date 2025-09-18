@@ -38,7 +38,7 @@ fastify.setErrorHandler(globalErrorHandler(fastify));
 (async () => {
   try {
     fastify.sequelize.sync();
-    await fastify.listen({ port: fastify.config.PORT });
+    await fastify.listen({ port: fastify.config.PORT, host: '0.0.0.0' });
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
